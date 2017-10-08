@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">Simple Task Manager</string>
+    <string name="action_settings">Settings</string>
+
+    <!-- Create new task -->
+    <string name="create_task">Create Task</string>
+    <string name="task_title">Task Title</string>
+    <string name="done">Done</string>
+    <string name="cancel">Cancel</string>
+    <string name="due_date">Due Date</string>
+    <string name="due_time">Due Time</string>
+
+    <!-- Misc -->
+    <string name="today">Today</string>
+
+    <!-- Homepage -->
+    <string name="no_tasks">You don\'t have any tasks yet.</string>
+    <string name="no_tasks_subtext">Click the plus icon to make a new one!</string>
+    <string name="search">Search</string>
+    <string name="number_of_tasks">%1$d Tasks</string>
+    <string name="task_created_success">Task created successfully!</string>
+
+    <!-- icons -->
+    <string name="search_icon">{ion-ios-search-strong}</string>
+    <string name="clear_icon">{ion-ios-close-empty}</string>
+    <string name="frown_icon">{ion-sad-outline}</string>
+    <string name="in_progress_icon">{ion-android-time}</string>
+    <string name="check_icon">{ion-ios-checkmark-outline}</string>
+
+</resources>

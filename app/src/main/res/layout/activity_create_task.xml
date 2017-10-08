@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    android:id="@+id/parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray_100">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    </android.support.design.widget.AppBarLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="?attr/actionBarSize">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:text="@string/task_title"
+                    style="@style/create_title"/>
+
+                <View
+                    style="@style/create_divider"/>
+
+                <EditText
+                    android:id="@+id/title_input"
+                    style="@style/create_section"/>
+
+                <View
+                    style="@style/create_divider"/>
+
+                <TextView
+                    android:id="@+id/due_date_title"
+                    android:text="@string/due_date"
+                    style="@style/create_title"/>
+
+                <View
+                    style="@style/create_divider"/>
+
+                <TextView
+                    android:id="@+id/due_date_input"
+                    style="@style/create_section"/>
+
+                <View
+                    style="@style/create_divider"/>
+
+                <TextView
+                    android:id="@+id/due_time_title"
+                    android:text="@string/due_time"
+                    style="@style/create_title"/>
+
+                <View
+                    style="@style/create_divider"/>
+
+                <TextView
+                    android:id="@+id/due_time_input"
+                    style="@style/create_section"/>
+
+                <View
+                    style="@style/create_divider"/>
+            </LinearLayout>
+        </ScrollView>
+
+            <com.rey.material.widget.Button
+                android:id="@+id/save_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="@string/create_task"
+                android:textColor="@color/white"
+                android:layout_alignParentBottom="true"
+                android:background="@color/colorAccent"
+                android:textSize="17dp"
+                app:rd_style="@style/button_ripple"/>
+    </RelativeLayout>
+
+</android.support.design.widget.CoordinatorLayout>
