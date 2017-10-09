@@ -12,7 +12,8 @@ import android.widget.TextView;
 import com.joanzapata.iconify.IconDrawable;
 import com.joanzapata.iconify.fonts.IoniconsIcons;
 import com.rey.material.widget.RadioButton;
-import com.task.Persistence.TaskDO;
+import com.task.Persistence.DatabaseManager;
+import com.task.Persistence.Task;
 import com.task.R;
 
 import java.text.SimpleDateFormat;
@@ -30,7 +31,7 @@ import static com.task.Persistence.TaskDO.IN_PROGRESS;
  */
 
 public class TaskViewActivity extends StandardActivity {
-    public final static String TASK_KEY = "taskkey";
+    public final static String TASK_ID_KEY = "taskId";
 
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.title) TextView title;
@@ -39,7 +40,7 @@ public class TaskViewActivity extends StandardActivity {
     @BindView(R.id.progress_radio) RadioButton inProgressRadio;
     @BindView(R.id.completed_radio) RadioButton completedRadio;
 
-    private TaskDO task;
+    private Task task;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,11 +51,12 @@ public class TaskViewActivity extends StandardActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        task = getIntent().getParcelableExtra(TASK_KEY);
+        String taskId = getIntent().getStringExtra(TASK_ID_KEY);
+        task = DatabaseManager.get().getTask(taskId);
         Log.d("Pusheen", "task: " + task);
 
         title.setText(task.getName());
-        dueDate.setText(task.getFormattedDate());
+//        dueDate.setText(task.getFormattedDate());
     }
 
     public void merp() {

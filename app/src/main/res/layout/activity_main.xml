@@ -20,49 +20,7 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <android.support.percent.PercentRelativeLayout
-        android:id="@+id/empty_state"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="?attr/actionBarSize"
-        android:visibility="gone"
-        android:padding="16dp">
-
-        <com.joanzapata.iconify.widget.IconTextView
-            android:id="@+id/icon"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_marginTopPercent="20%"
-            android:gravity="center"
-            android:text="@string/frown_icon"
-            android:textSize="80sp"
-            android:textColor="@color/gray_500"/>
-
-        <TextView
-            android:id="@+id/no_notifiers_text"
-            android:layout_below="@+id/icon"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_marginTopPercent="10%"
-            android:gravity="center"
-            android:textSize="20sp"
-            android:text="@string/no_tasks"
-            android:textColor="@color/gray_600"/>
-
-        <TextView
-            android:id="@+id/no_notifiers_subtext"
-            android:layout_below="@+id/no_notifiers_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:gravity="center"
-            android:textSize="15sp"
-            android:text="@string/no_tasks_subtext"
-            android:textColor="@color/gray_600"/>
-    </android.support.percent.PercentRelativeLayout>
-
     <LinearLayout
-        android:id="@+id/content_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="?attr/actionBarSize"
@@ -74,37 +32,31 @@
             android:background="@color/white">
 
             <com.joanzapata.iconify.widget.IconTextView
-                android:layout_width="wrap_content"
+                android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:layout_gravity="start"
+                android:layout_gravity="start|center_vertical"
                 android:textSize="20dp"
-                android:gravity="center_vertical"
-                android:layout_marginLeft="16dp"
+                android:gravity="center"
                 android:text="@string/search_icon"/>
 
             <EditText
                 android:id="@+id/search_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:paddingLeft="40dp"
+                android:paddingRight="40dp"
                 android:layout_gravity="center_vertical"
-                android:layout_marginLeft="32dp"
-                android:layout_marginRight="30dp"
-                android:maxLines="1"
+                android:singleLine="true"
                 android:textSize="17dp"
                 android:background="@android:color/transparent"
-                android:imeOptions="actionSearch"
+                android:imeOptions="actionDone"
                 android:hint="@string/search"/>
 
             <com.joanzapata.iconify.widget.IconTextView
                 android:id="@+id/clear_search_input"
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:layout_gravity="end"
-                android:layout_marginRight="15dp"
-                android:textSize="30dp"
-                android:gravity="center"
-                android:text="@string/clear_icon"/>
+                style="@style/clear_icon"/>
 
         </FrameLayout>
 
@@ -132,8 +84,47 @@
             android:layout_height="match_parent"
             android:background="@color/gray_50"
             android:paddingBottom="87dp"
-            android:clipToPadding="false" />
+            android:clipToPadding="false"/>
 
+        <android.support.percent.PercentRelativeLayout
+            android:id="@+id/empty_state"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="?attr/actionBarSize"
+            android:visibility="gone"
+            android:padding="16dp">
+
+            <com.joanzapata.iconify.widget.IconTextView
+                android:id="@+id/icon"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_marginTopPercent="20%"
+                android:gravity="center"
+                android:text="@string/frown_icon"
+                android:textSize="80sp"
+                android:textColor="@color/gray_500"/>
+
+            <TextView
+                android:id="@+id/no_notifiers_text"
+                android:layout_below="@+id/icon"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_marginTopPercent="10%"
+                android:gravity="center"
+                android:textSize="20sp"
+                android:textColor="@color/gray_600"/>
+
+            <TextView
+                android:id="@+id/no_notifiers_subtext"
+                android:layout_below="@+id/no_notifiers_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:textSize="15sp"
+                android:text="@string/no_tasks_subtext"
+                android:textColor="@color/gray_600"/>
+        </android.support.percent.PercentRelativeLayout>
     </LinearLayout>
 
     <android.support.design.widget.FloatingActionButton

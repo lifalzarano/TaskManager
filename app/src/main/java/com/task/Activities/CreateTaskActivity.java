@@ -1,23 +1,19 @@
 package com.task.Activities;
 
-import com.rey.material.app.DatePickerDialog;
-import com.rey.material.app.Dialog;
-import com.rey.material.app.TimePickerDialog;
-
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
+import android.text.Editable;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.rey.material.app.DatePickerDialog;
+import com.rey.material.app.Dialog;
+import com.rey.material.app.DialogFragment;
+import com.rey.material.app.TimePickerDialog;
 import com.task.Persistence.DatabaseManager;
 import com.task.Persistence.Task;
 import com.task.R;
-
-import com.rey.material.app.DialogFragment;
 import com.task.Utils.FormUtils;
 
 import java.text.SimpleDateFormat;
@@ -25,6 +21,7 @@ import java.text.SimpleDateFormat;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnTextChanged;
 
 /**
  * Created by laurenfalzarano on 4/9/17.
@@ -34,6 +31,7 @@ public class CreateTaskActivity extends StandardActivity {
 
     @BindView(R.id.parent) View parent;
     @BindView(R.id.title_input) EditText titleInput;
+    @BindView(R.id.clear_title) View clearTitle;
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.due_date_input) TextView dueDate;
     @BindView(R.id.due_time_input) TextView dueTime;
@@ -50,23 +48,16 @@ public class CreateTaskActivity extends StandardActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         task = new Task();
-
     }
 
-    @OnClick(R.id.save_button)
-    public void onSave() {
-        String title = titleInput.getText().toString().trim();
+    @OnTextChanged(value = R.id.title_input, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
+    public void afterTextChanged(Editable input) {
+        clearTitle.setVisibility(input.length() > 0 ? View.VISIBLE : View.GONE);
+    }
 
-        if (title.isEmpty()) {
-            FormUtils.showBlackSnackbar(parent, "You must provide a title!");
-            return;
-        }
-
-        task.setName(title);
-        DatabaseManager.get().saveTask(task);
-
-        setResult(RESULT_OK);
-        finish();
+    @OnClick(R.id.clear_title)
+    public void clearTitle() {
+        titleInput.setText("");
     }
 
     @OnClick({R.id.due_date_title, R.id.due_date_input})
@@ -89,6 +80,11 @@ public class CreateTaskActivity extends StandardActivity {
 
     @OnClick({R.id.due_time_title, R.id.due_time_input})
     public void onTime() {
+        if (dueDate.length() == 0) {
+            FormUtils.showBlackSnackbar(parent, R.string.need_date);
+            return;
+        }
+
         Dialog.Builder builder = new TimePickerDialog.Builder(){
             @Override
             public void onPositiveActionClicked(DialogFragment fragment) {
@@ -103,5 +99,21 @@ public class CreateTaskActivity extends StandardActivity {
 
         DialogFragment fragment = DialogFragment.newInstance(builder);
         fragment.show(getSupportFragmentManager(), null);
+    }
+
+    @OnClick(R.id.save_button)
+    public void onSave() {
+        String title = titleInput.getText().toString().trim();
+
+        if (title.isEmpty()) {
+            FormUtils.showBlackSnackbar(parent, "You must provide a title!");
+            return;
+        }
+
+        task.setName(title);
+        DatabaseManager.get().saveTask(task);
+
+        setResult(RESULT_OK);
+        finish();
     }
 }

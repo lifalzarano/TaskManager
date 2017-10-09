@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Simple Task Manager</string>
-    <string name="action_settings">Settings</string>
     <string name="edit">Edit</string>
+    <string name="settings">Settings</string>
 
     <!-- Create new task -->
     <string name="create_task">Create Task</string>
@@ -10,6 +10,7 @@
     <string name="cancel">Cancel</string>
     <string name="due_date">Due Date</string>
     <string name="due_time">Due Time</string>
+    <string name="need_date">You need to fill in a due date before you can fill in a due time.</string>
 
     <!-- Task DO keywords -->
     <string name="not_started">Not started</string>
@@ -22,8 +23,10 @@
 
     <!-- Homepage -->
     <string name="no_tasks">You don\'t have any tasks yet.</string>
+    <string name="no_tasks_match">None of your tasks match your search criteria.</string>
     <string name="no_tasks_subtext">Click the plus icon to make a new one!</string>
     <string name="search">Search</string>
+    <string name="one_task">1 Task</string>
     <string name="number_of_tasks">%1$d Tasks</string>
     <string name="task_created_success">Task created successfully!</string>
 

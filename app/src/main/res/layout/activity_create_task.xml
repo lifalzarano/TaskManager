@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout
-    android:id="@+id/parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/parent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/gray_100">
@@ -42,9 +42,21 @@
                 <View
                     style="@style/create_divider"/>
 
-                <EditText
-                    android:id="@+id/title_input"
-                    style="@style/create_section"/>
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/title_input"
+                        android:singleLine="true"
+                        android:imeOptions="actionDone"
+                        android:paddingRight="40dp"
+                        style="@style/create_section"/>
+
+                    <com.joanzapata.iconify.widget.IconTextView
+                        android:id="@+id/clear_title"
+                        style="@style/clear_icon"/>
+                </FrameLayout>
 
                 <View
                     style="@style/create_divider"/>
