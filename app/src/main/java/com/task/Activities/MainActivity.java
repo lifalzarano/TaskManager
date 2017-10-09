@@ -16,7 +16,6 @@ import com.joanzapata.iconify.IconDrawable;
 import com.joanzapata.iconify.fonts.IoniconsIcons;
 import com.task.Adapters.TaskAdapter;
 import com.task.Persistence.DatabaseManager;
-import com.task.Persistence.TaskDO;
 import com.task.R;
 import com.task.Utils.FormUtils;
 
@@ -26,7 +25,7 @@ import butterknife.OnClick;
 import butterknife.OnItemClick;
 import butterknife.OnTextChanged;
 
-import static com.task.Activities.TaskViewActivity.TASK_KEY;
+import static com.task.Activities.TaskViewActivity.TASK_ID_KEY;
 
 public class MainActivity extends StandardActivity {
     @BindView(R.id.parent) View parent;
@@ -110,7 +109,7 @@ public class MainActivity extends StandardActivity {
     @OnItemClick(R.id.tasks_list)
     public void onTaskClick(int position) {
         Intent intent = new Intent(this, TaskViewActivity.class);
-        intent.putExtra(TASK_KEY, new TaskDO(taskAdapter.getItem(position)));
+        intent.putExtra(TASK_ID_KEY, taskAdapter.getItem(position).getTaskId());
         startActivity(intent);
     }
 

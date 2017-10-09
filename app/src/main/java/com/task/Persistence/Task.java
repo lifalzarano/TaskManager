@@ -1,6 +1,7 @@
 package com.task.Persistence;
 
 import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 /**
  * Created by laurenfalzarano on 4/9/17.
@@ -11,10 +12,21 @@ public class Task extends RealmObject {
     public static int IN_PROGRESS = 1;
     public static int DONE = 2;
 
+    @PrimaryKey
+    private String taskId;
+
     private String name;
     private int state;
     private long date;
     private long time;
+
+    public String getTaskId() {
+        return taskId;
+    }
+
+    public void setTaskId(String taskId) {
+        this.taskId = taskId;
+    }
 
     public String getName() {
         return name;

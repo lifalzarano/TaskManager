@@ -5,7 +5,8 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.widget.TextView;
 
-import com.task.Persistence.TaskDO;
+import com.task.Persistence.DatabaseManager;
+import com.task.Persistence.Task;
 import com.task.R;
 
 import butterknife.BindView;
@@ -16,12 +17,12 @@ import butterknife.ButterKnife;
  */
 
 public class TaskViewActivity extends StandardActivity {
-    public final static String TASK_KEY = "taskkey";
+    public final static String TASK_ID_KEY = "taskId";
 
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.title) TextView title;
 
-    private TaskDO task;
+    private Task task;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +33,8 @@ public class TaskViewActivity extends StandardActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        task = getIntent().getParcelableExtra(TASK_KEY);
+        String taskId = getIntent().getStringExtra(TASK_ID_KEY);
+        task = DatabaseManager.get().getTask(taskId);
         Log.d("Pusheen", "task: " + task);
 
         title.setText(task.getName());
