@@ -17,12 +17,15 @@ import com.task.Persistence.Task;
 import com.task.R;
 import com.task.Utils.FormUtils;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static com.task.Utils.FormUtils.CREATED;
 import static com.task.Utils.FormUtils.IN_PROGRESS;
 import static com.task.Utils.FormUtils.DONE;
 
@@ -53,6 +56,7 @@ public class TaskViewActivity extends StandardActivity {
 
         String taskId = getIntent().getStringExtra(TASK_ID_KEY);
         task = DatabaseManager.get().getTask(taskId);
+
         Log.d("Pusheen", "task: " + task);
 
         title.setText(task.getName());
@@ -60,13 +64,24 @@ public class TaskViewActivity extends StandardActivity {
     }
 
     public void merp() {
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
+    }
+
+    private void clearRadioButtons() {
+        notStartedRadio.setCheckedImmediately(false);
+        inProgressRadio.setCheckedImmediately(false);
+        completedRadio.setCheckedImmediately(false);
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        clearRadioButtons();
+
+        Date date = new Date(task.getDate());
+        SimpleDateFormat formatter = new SimpleDateFormat("MMM dd yyyy");
+        dueDate.setText(formatter.format(date));
+
 
         switch (task.getState()) {
             case IN_PROGRESS:
@@ -106,19 +121,22 @@ public class TaskViewActivity extends StandardActivity {
 
     @OnClick({R.id.not_started_radio, R.id.progress_radio, R.id.completed_radio})
     public void completedClick(View view) {
-        notStartedRadio.setChecked(false);
-        inProgressRadio.setChecked(false);
-        completedRadio.setChecked(false);
+        clearRadioButtons();
 
         switch (view.getId()) {
             case R.id.not_started_radio:
                 notStartedRadio.setCheckedImmediately(true);
+                task.setState(CREATED);
                 break;
             case R.id.progress_radio:
                 inProgressRadio.setCheckedImmediately(true);
+                task.setState(IN_PROGRESS);
                 break;
             case R.id.completed_radio:
                 completedRadio.setCheckedImmediately(true);
+                task.setState(DONE);
         }
+
+        DatabaseManager.get().saveTask(task);
     }
 }
