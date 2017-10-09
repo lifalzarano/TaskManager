@@ -8,10 +8,6 @@ import io.realm.annotations.PrimaryKey;
  */
 
 public class Task extends RealmObject {
-    public static int CREATED = 0;
-    public static int IN_PROGRESS = 1;
-    public static int DONE = 2;
-
     @PrimaryKey
     private String taskId;
     private String name;

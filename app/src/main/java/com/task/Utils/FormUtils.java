@@ -15,6 +15,10 @@ import com.task.R;
  */
 
 public class FormUtils {
+    public final static int CREATED = 0;
+    public final static int IN_PROGRESS = 1;
+    public final static int DONE = 2;
+
     public static void showSnackbar(View parent, String message, int backgroundColor, int textColor) {
         Snackbar snackbar = Snackbar.make(parent, message, Snackbar.LENGTH_LONG);
         View rootView = snackbar.getView();
@@ -32,5 +36,18 @@ public class FormUtils {
 
     public static void showBlackSnackbar(View parent, @StringRes int resId) {
         showBlackSnackbar(parent, MyApplication.getAppContext().getString(resId));
+    }
+
+    public static String getStatusString(int state) {
+        switch (state) {
+            case CREATED:
+                return MyApplication.getAppContext().getString(R.string.not_started);
+            case IN_PROGRESS:
+                return MyApplication.getAppContext().getString(R.string.in_progress);
+            case DONE:
+                return MyApplication.getAppContext().getString(R.string.completed);
+            default:
+                return MyApplication.getAppContext().getString(R.string.not_started);
+        }
     }
 }

@@ -15,6 +15,7 @@ import com.rey.material.widget.RadioButton;
 import com.task.Persistence.DatabaseManager;
 import com.task.Persistence.Task;
 import com.task.R;
+import com.task.Utils.FormUtils;
 
 import java.text.SimpleDateFormat;
 
@@ -22,9 +23,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import static android.net.wifi.SupplicantState.COMPLETED;
-import static com.task.Persistence.TaskDO.DONE;
-import static com.task.Persistence.TaskDO.IN_PROGRESS;
+import static com.task.Utils.FormUtils.IN_PROGRESS;
+import static com.task.Utils.FormUtils.DONE;
 
 /**
  * Created by laurenfalzarano on 10/8/17.
@@ -96,7 +96,9 @@ public class TaskViewActivity extends StandardActivity {
         int id = item.getItemId();
 
         if (id == R.id.edit) {
-            startActivityForResult(new Intent(this, CreateTaskActivity.class), 1);
+            Intent intent = new Intent(this, CreateTaskActivity.class);
+            intent.putExtra(TASK_ID_KEY, task.getTaskId());
+            startActivityForResult(intent, 1);
         }
 
         return super.onOptionsItemSelected(item);
