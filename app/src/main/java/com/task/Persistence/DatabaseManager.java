@@ -3,6 +3,7 @@ package com.task.Persistence;
 import com.task.Application.MyApplication;
 
 import java.util.List;
+import java.util.UUID;
 
 import io.realm.Case;
 import io.realm.Realm;
@@ -42,8 +43,12 @@ public class DatabaseManager {
 
     public void saveTask(Task task) {
         try {
+            if (task.getTaskId() == null) {
+                task.setTaskId(UUID.randomUUID().toString());
+            }
+
             realm.beginTransaction();
-            realm.copyToRealm(task);
+            realm.copyToRealmOrUpdate(task);
             realm.commitTransaction();
         } catch (Exception e) {
             e.printStackTrace();
@@ -60,5 +65,11 @@ public class DatabaseManager {
         return realm.where(Task.class)
                 .findAll()
                 .size();
+    }
+
+    public Task getTask(String taskId) {
+        return realm.where(Task.class)
+                .equalTo("taskId", taskId)
+                .findFirst();
     }
 }
