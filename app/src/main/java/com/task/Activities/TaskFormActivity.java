@@ -11,6 +11,7 @@ import com.rey.material.app.DatePickerDialog;
 import com.rey.material.app.Dialog;
 import com.rey.material.app.DialogFragment;
 import com.rey.material.app.TimePickerDialog;
+import com.rey.material.widget.Button;
 import com.task.Persistence.DatabaseManager;
 import com.task.Persistence.Task;
 import com.task.R;
@@ -28,7 +29,7 @@ import butterknife.OnTextChanged;
  * Created by laurenfalzarano on 4/9/17.
  */
 
-public class CreateTaskActivity extends StandardActivity {
+public class TaskFormActivity extends StandardActivity {
 
     @BindView(R.id.parent) View parent;
     @BindView(R.id.title_input) EditText titleInput;
@@ -36,6 +37,7 @@ public class CreateTaskActivity extends StandardActivity {
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.due_date_input) TextView dueDate;
     @BindView(R.id.due_time_input) TextView dueTime;
+    @BindView(R.id.save_button) Button saveButton;
 
     private Task task;
     private Calendar calendar;
@@ -50,11 +52,17 @@ public class CreateTaskActivity extends StandardActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(0L);
 
         String taskId = getIntent().getStringExtra(TaskViewActivity.TASK_ID_KEY);
         if (taskId == null) {
             task = new Task();
+            setTitle(R.string.create_task);
+            saveButton.setText(R.string.create_task);
         } else {
+            setTitle(R.string.edit_task);
+            saveButton.setText(R.string.edit_task);
+
             task = DatabaseManager.get().getTask(taskId);
             calendar.setTimeInMillis(task.getTime());
             fillInForm();
@@ -63,8 +71,11 @@ public class CreateTaskActivity extends StandardActivity {
 
     private void fillInForm() {
         titleInput.setText(task.getName());
-        dueDate.setText(TimeUtils.getDateText(calendar.getTimeInMillis()));
-        dueTime.setText(TimeUtils.getTimeText(calendar.getTimeInMillis()));
+        titleInput.setSelection(task.getName().length());
+        if (calendar.getTimeInMillis() > 0L) {
+            dueDate.setText(TimeUtils.getDateText(calendar.getTimeInMillis()));
+            dueTime.setText(TimeUtils.getTimeText(calendar.getTimeInMillis()));
+        }
     }
 
     @OnTextChanged(value = R.id.title_input, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
@@ -87,6 +98,11 @@ public class CreateTaskActivity extends StandardActivity {
                 calendar.set(Calendar.MONTH, dialog.getMonth());
                 calendar.set(Calendar.DAY_OF_MONTH, dialog.getDay());
                 dueDate.setText(TimeUtils.getDateText(calendar.getTimeInMillis()));
+
+                if (dueTime.getText().toString().isEmpty()) {
+                    dueTime.setText(TimeUtils.getTimeText(calendar.getTimeInMillis()));
+                }
+
                 super.onPositiveActionClicked(fragment);
             }
         };
@@ -131,7 +147,9 @@ public class CreateTaskActivity extends StandardActivity {
         }
 
         task.setName(title);
-        task.setTime(calendar.getTimeInMillis());
+        if (!dueDate.getText().toString().isEmpty()) {
+            task.setTime(calendar.getTimeInMillis());
+        }
         DatabaseManager.get().saveTask(task);
 
         setResult(RESULT_OK);
