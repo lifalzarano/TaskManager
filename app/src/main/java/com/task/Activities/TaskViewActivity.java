@@ -15,7 +15,6 @@ import com.rey.material.widget.RadioButton;
 import com.task.Persistence.DatabaseManager;
 import com.task.Persistence.Task;
 import com.task.R;
-import com.task.Utils.FormUtils;
 
 import java.text.SimpleDateFormat;
 
@@ -23,8 +22,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import static com.task.Utils.FormUtils.IN_PROGRESS;
 import static com.task.Utils.FormUtils.DONE;
+import static com.task.Utils.FormUtils.IN_PROGRESS;
 
 /**
  * Created by laurenfalzarano on 10/8/17.
