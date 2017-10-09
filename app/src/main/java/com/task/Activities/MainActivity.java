@@ -16,12 +16,9 @@ import com.joanzapata.iconify.IconDrawable;
 import com.joanzapata.iconify.fonts.IoniconsIcons;
 import com.task.Adapters.TaskAdapter;
 import com.task.Persistence.DatabaseManager;
-import com.task.Persistence.Task;
 import com.task.Persistence.TaskDO;
 import com.task.R;
 import com.task.Utils.FormUtils;
-
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -38,11 +35,11 @@ public class MainActivity extends StandardActivity {
     @BindView(R.id.search_input) EditText searchInput;
     @BindView(R.id.clear_search_input) View clearSearch;
     @BindView(R.id.empty_state) View emptyState;
-    @BindView(R.id.content_view) View contentView;
+    @BindView(R.id.no_notifiers_text) TextView noTasksText;
+    @BindView(R.id.no_notifiers_subtext) TextView addTasksCta;
     @BindView(R.id.num_tasks) TextView numTasks;
     @BindView(R.id.tasks_list) ListView taskListView;
 
-    private List<Task> taskList;
     private TaskAdapter taskAdapter;
 
     @Override
@@ -53,8 +50,7 @@ public class MainActivity extends StandardActivity {
 
         setSupportActionBar(toolbar);
 
-        taskList = DatabaseManager.get().getTasks();
-        taskAdapter = new TaskAdapter(this, taskList);
+        taskAdapter = new TaskAdapter(this);
         taskListView.setAdapter(taskAdapter);
 
         fab.setImageDrawable(new IconDrawable(this, IoniconsIcons.ion_plus)
@@ -64,7 +60,10 @@ public class MainActivity extends StandardActivity {
 
     @OnTextChanged(value = R.id.search_input, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     public void afterTextChanged(Editable input) {
-        clearSearch.setVisibility(input.length() > 0 ? View.VISIBLE : View.GONE);
+        String query = input.toString();
+        clearSearch.setVisibility(query.isEmpty() ? View.GONE : View.VISIBLE);
+        taskAdapter.refreshTasks(query);
+        refreshPage();
     }
 
     @OnClick(R.id.clear_search_input)
@@ -73,15 +72,33 @@ public class MainActivity extends StandardActivity {
     }
 
     private void refreshPage() {
-        taskList = DatabaseManager.get().getTasks();
+        int taskCount = taskAdapter.getCount();
 
-        if (taskList.size() == 0) {
+        if (taskCount == 0) {
+            int tasksTrueCount = DatabaseManager.get().getNumTasks();
+
+            // Absolutely 0 tasks in DB
+            if (tasksTrueCount == 0) {
+                noTasksText.setText(R.string.no_tasks);
+                addTasksCta.setVisibility(View.VISIBLE);
+            }
+            // Some tasks in DB; it's just that none match the user's search input
+            else {
+                noTasksText.setText(R.string.no_tasks_match);
+                addTasksCta.setVisibility(View.GONE);
+            }
+
             emptyState.setVisibility(View.VISIBLE);
-            contentView.setVisibility(View.GONE);
+            taskListView.setVisibility(View.GONE);
         } else {
             emptyState.setVisibility(View.GONE);
-            contentView.setVisibility(View.VISIBLE);
-            numTasks.setText(String.format(getString(R.string.number_of_tasks), taskList.size()));
+            taskListView.setVisibility(View.VISIBLE);
+        }
+
+        if (taskCount == 1) {
+            numTasks.setText(R.string.one_task);
+        } else {
+            numTasks.setText(String.format(getString(R.string.number_of_tasks), taskCount));
         }
     }
 
@@ -93,7 +110,7 @@ public class MainActivity extends StandardActivity {
     @OnItemClick(R.id.tasks_list)
     public void onTaskClick(int position) {
         Intent intent = new Intent(this, TaskViewActivity.class);
-        intent.putExtra(TASK_KEY, new TaskDO(taskList.get(position)));
+        intent.putExtra(TASK_KEY, new TaskDO(taskAdapter.getItem(position)));
         startActivity(intent);
     }
 
@@ -101,7 +118,7 @@ public class MainActivity extends StandardActivity {
     public void onResume() {
         super.onResume();
         refreshPage();
-        taskAdapter.refreshTasks();
+        taskAdapter.refreshTasks(searchInput.getText().toString());
     }
 
     @Override

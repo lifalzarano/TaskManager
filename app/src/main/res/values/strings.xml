@@ -16,8 +16,10 @@
 
     <!-- Homepage -->
     <string name="no_tasks">You don\'t have any tasks yet.</string>
+    <string name="no_tasks_match">None of your tasks match your search criteria.</string>
     <string name="no_tasks_subtext">Click the plus icon to make a new one!</string>
     <string name="search">Search</string>
+    <string name="one_task">1 Task</string>
     <string name="number_of_tasks">%1$d Tasks</string>
     <string name="task_created_success">Task created successfully!</string>
 
