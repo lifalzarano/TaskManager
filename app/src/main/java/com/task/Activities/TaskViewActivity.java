@@ -3,7 +3,6 @@ package com.task.Activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,9 +14,7 @@ import com.rey.material.widget.RadioButton;
 import com.task.Persistence.DatabaseManager;
 import com.task.Persistence.Task;
 import com.task.R;
-import com.task.Utils.FormUtils;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -26,8 +23,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static com.task.Utils.FormUtils.CREATED;
-import static com.task.Utils.FormUtils.IN_PROGRESS;
 import static com.task.Utils.FormUtils.DONE;
+import static com.task.Utils.FormUtils.IN_PROGRESS;
 
 /**
  * Created by laurenfalzarano on 10/8/17.
@@ -56,11 +53,6 @@ public class TaskViewActivity extends StandardActivity {
 
         String taskId = getIntent().getStringExtra(TASK_ID_KEY);
         task = DatabaseManager.get().getTask(taskId);
-
-        Log.d("Pusheen", "task: " + task);
-
-        title.setText(task.getName());
-//        dueDate.setText(task.getFormattedDate());
     }
 
     public void merp() {
@@ -76,12 +68,13 @@ public class TaskViewActivity extends StandardActivity {
     @Override
     public void onResume() {
         super.onResume();
+
+        title.setText(task.getName());
         clearRadioButtons();
 
         Date date = new Date(task.getDate());
         SimpleDateFormat formatter = new SimpleDateFormat("MMM dd yyyy");
         dueDate.setText(formatter.format(date));
-
 
         switch (task.getState()) {
             case IN_PROGRESS:

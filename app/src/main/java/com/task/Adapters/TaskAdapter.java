@@ -8,14 +8,19 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.joanzapata.iconify.widget.IconTextView;
 import com.task.Persistence.DatabaseManager;
 import com.task.Persistence.Task;
 import com.task.R;
 
 import java.util.List;
 
+import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.task.Utils.FormUtils.DONE;
+import static com.task.Utils.FormUtils.IN_PROGRESS;
 
 /**
  * Created by laurenfalzarano on 7/15/17.
@@ -55,23 +60,42 @@ public class TaskAdapter extends BaseAdapter {
         if (view == null) {
             LayoutInflater vi = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = vi.inflate(R.layout.task_list_cell, parent, false);
-            holder = new TaskListViewHolder(view);
+            holder = new TaskListViewHolder(view, tasks.get(position));
             view.setTag(holder);
         } else {
             holder = (TaskListViewHolder) view.getTag();
         }
 
-        holder.title.setText(getItem(position).getName());
+        holder.loadTask(tasks.get(position));
 
         return view;
     }
 
     public static class TaskListViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.task_title) TextView title;
+        @BindView(R.id.state_icon) IconTextView stateIcon;
 
-        public TaskListViewHolder(View view) {
+        @BindString(R.string.in_progress_icon) String progressIcon;
+        @BindString(R.string.check_icon) String checkIcon;
+
+        public TaskListViewHolder(View view, Task task) {
             super(view);
             ButterKnife.bind(this, view);
+        }
+
+        public void loadTask(Task task) {
+            title.setText(task.getName());
+
+            switch (task.getState()) {
+                case IN_PROGRESS:
+                    stateIcon.setText(progressIcon);
+                    break;
+                case DONE:
+                    stateIcon.setText(checkIcon);
+                    break;
+                default:
+                    stateIcon.setText("");
+            }
         }
     }
 }
