@@ -68,8 +68,17 @@ public class DatabaseManager {
     }
 
     public Task getTask(String taskId) {
-        return realm.where(Task.class)
+        Task originalTask = realm.where(Task.class)
                 .equalTo("taskId", taskId)
                 .findFirst();
+
+        // Deep copy because you can't edit raw Realm objects outside of a realm transaction
+        Task newTask = new Task();
+        newTask.setTaskId(originalTask.getTaskId());
+        newTask.setName(originalTask.getName());
+        newTask.setState(originalTask.getState());
+        newTask.setDate(originalTask.getDate());
+        newTask.setTime(originalTask.getTime());
+        return newTask;
     }
 }
