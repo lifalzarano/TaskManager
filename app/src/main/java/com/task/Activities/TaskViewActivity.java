@@ -40,6 +40,7 @@ public class TaskViewActivity extends StandardActivity {
     @BindView(R.id.progress_radio) RadioButton inProgressRadio;
     @BindView(R.id.completed_radio) RadioButton completedRadio;
 
+    private String taskId;
     private Task task;
 
     @Override
@@ -51,8 +52,7 @@ public class TaskViewActivity extends StandardActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        String taskId = getIntent().getStringExtra(TASK_ID_KEY);
-        task = DatabaseManager.get().getTask(taskId);
+        taskId = getIntent().getStringExtra(TASK_ID_KEY);
     }
 
     private void clearRadioButtons() {
@@ -65,6 +65,7 @@ public class TaskViewActivity extends StandardActivity {
     public void onResume() {
         super.onResume();
 
+        task = DatabaseManager.get().getTask(taskId);
         title.setText(task.getName());
         dueDate.setText(TimeUtils.getDateAndTime(task));
         clearRadioButtons();

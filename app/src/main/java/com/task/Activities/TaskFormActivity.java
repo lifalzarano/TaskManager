@@ -77,7 +77,7 @@ public class TaskFormActivity extends StandardActivity {
         if (dateCalendar.getTimeInMillis() > 0L) {
             dueDate.setText(TimeUtils.getDateText(dateCalendar.getTimeInMillis()));
         }
-        if (dateCalendar.getTimeInMillis() > 0L) {
+        if (timeCalendar.getTimeInMillis() > 0L) {
             dueTime.setText(TimeUtils.getTimeText(timeCalendar.getTimeInMillis()));
         }
     }
@@ -125,7 +125,7 @@ public class TaskFormActivity extends StandardActivity {
                 TimePickerDialog dialog = (TimePickerDialog)fragment.getDialog();
                 timeCalendar.set(Calendar.HOUR_OF_DAY, dialog.getHour());
                 timeCalendar.set(Calendar.MINUTE, dialog.getMinute());
-                dueTime.setText(TimeUtils.getTimeText(dateCalendar.getTimeInMillis()));
+                dueTime.setText(TimeUtils.getTimeText(timeCalendar.getTimeInMillis()));
                 super.onPositiveActionClicked(fragment);
             }
         };
@@ -150,7 +150,7 @@ public class TaskFormActivity extends StandardActivity {
             task.setDate(dateCalendar.getTimeInMillis());
         }
         if (!dueTime.getText().toString().isEmpty()) {
-            task.setTime(dateCalendar.getTimeInMillis());
+            task.setTime(timeCalendar.getTimeInMillis());
         }
         DatabaseManager.get().saveTask(task);
 
