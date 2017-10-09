@@ -26,7 +26,7 @@ public class TimeUtils {
         return simpleDateFormat.format(date);
     }
 
-    public static String getDateAndTime(Task task) {
+    public static String getDateAndTimeText(Task task) {
         StringBuilder dueText = new StringBuilder();
         if (task.getDate() > 0L) {
             dueText.append(getDateText(task.getDate()));

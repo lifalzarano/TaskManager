@@ -67,7 +67,7 @@ public class TaskViewActivity extends StandardActivity {
 
         task = DatabaseManager.get().getTask(taskId);
         title.setText(task.getName());
-        dueDate.setText(TimeUtils.getDateAndTime(task));
+        dueDate.setText(TimeUtils.getDateAndTimeText(task));
         clearRadioButtons();
 
         switch (task.getState()) {

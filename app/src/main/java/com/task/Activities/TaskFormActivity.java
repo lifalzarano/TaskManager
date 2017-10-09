@@ -123,6 +123,10 @@ public class TaskFormActivity extends StandardActivity {
             @Override
             public void onPositiveActionClicked(DialogFragment fragment) {
                 TimePickerDialog dialog = (TimePickerDialog)fragment.getDialog();
+
+                // Anchor time calendar to the date the user has currently entered in to get us out of 0 range
+                timeCalendar.setTimeInMillis(dateCalendar.getTimeInMillis());
+
                 timeCalendar.set(Calendar.HOUR_OF_DAY, dialog.getHour());
                 timeCalendar.set(Calendar.MINUTE, dialog.getMinute());
                 dueTime.setText(TimeUtils.getTimeText(timeCalendar.getTimeInMillis()));
