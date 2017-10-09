@@ -27,6 +27,14 @@ public class TimeUtils {
     }
 
     public static String getDateAndTime(Task task) {
-        return getDateText(task.getDate()) + " - " + getTimeText(task.getTime());
+        StringBuilder dueText = new StringBuilder();
+        if (task.getDate() > 0L) {
+            dueText.append(getDateText(task.getDate()));
+        }
+        if (task.getTime() > 0L) {
+            dueText.append(" - ");
+            dueText.append(getTimeText(task.getTime()));
+        }
+        return dueText.toString();
     }
 }
