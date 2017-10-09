@@ -26,7 +26,10 @@
     <style name="create_section">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">match_parent</item>
-        <item name="android:padding">10dp</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingBottom">10dp</item>
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:paddingRight">10dp</item>
         <item name="android:background">@color/white</item>
         <item name="android:textColor">@color/gray_600</item>
         <item name="android:textSize">16dp</item>
@@ -52,4 +55,14 @@
         <item name="rd_rippleAnimDuration">250</item>
     </style>
 
+    <style name="clear_icon">
+        <item name="android:layout_width">40dp</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:textSize">32dp</item>
+        <item name="android:textColor">@color/gray_600</item>
+        <item name="android:gravity">center</item>
+        <item name="android:text">@string/clear_icon</item>
+        <item name="android:layout_gravity">center_vertical|end</item>
+        <item name="android:visibility">gone</item>
+    </style>
 </resources>
