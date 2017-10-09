@@ -1,23 +1,18 @@
 package com.task.Activities;
 
-import com.rey.material.app.DatePickerDialog;
-import com.rey.material.app.Dialog;
-import com.rey.material.app.TimePickerDialog;
-
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.rey.material.app.DatePickerDialog;
+import com.rey.material.app.Dialog;
+import com.rey.material.app.DialogFragment;
+import com.rey.material.app.TimePickerDialog;
 import com.task.Persistence.DatabaseManager;
 import com.task.Persistence.Task;
 import com.task.R;
-
-import com.rey.material.app.DialogFragment;
 import com.task.Utils.FormUtils;
 
 import java.text.SimpleDateFormat;

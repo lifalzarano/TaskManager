@@ -5,7 +5,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.widget.TextView;
 
-import com.task.Persistence.Task;
 import com.task.Persistence.TaskDO;
 import com.task.R;
 
