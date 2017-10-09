@@ -95,7 +95,7 @@ public class TaskViewActivity extends StandardActivity {
         int id = item.getItemId();
 
         if (id == R.id.edit) {
-            Intent intent = new Intent(this, CreateTaskActivity.class);
+            Intent intent = new Intent(this, TaskFormActivity.class);
             intent.putExtra(TASK_ID_KEY, task.getTaskId());
             startActivityForResult(intent, 1);
         }
