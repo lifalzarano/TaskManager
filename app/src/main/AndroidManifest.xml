@@ -30,6 +30,11 @@
             android:name=".Activities.TaskViewActivity"
             android:label="@string/create_task"
             android:theme="@style/AppTheme.NoActionBar"/>
+
+        <activity
+            android:name=".Activities.SettingsActivity"
+            android:label="@string/settings"
+            android:theme="@style/AppTheme"/>
     </application>
 
 </manifest>
