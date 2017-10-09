@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/gray_100">
+    android:background="@color/white">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -33,21 +33,73 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
                 android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="10dp"
-                    android:textSize="18dp"
-                    android:textColor="@color/gray_700"
+                    android:paddingTop="10dp"
+                    android:textSize="20dp"
+                    android:textColor="@color/gray_900"
+                    android:text="potato"
                     />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@color/gray_300"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/gray_500"
+                    android:textStyle="bold"
+                    android:layout_marginTop="15dp"
+                    android:text="@string/due_by"/>
 
                 <TextView
                     android:id="@+id/due_date"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/gray_900"
+                    android:layout_marginTop="5dp"
+                    android:text="potato"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="15dp"
+                    android:background="@color/gray_300"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/gray_500"
+                    android:textStyle="bold"
+                    android:layout_marginTop="15dp"
+                    android:text="@string/status"/>
+
+                <com.rey.material.widget.RadioButton
+                    android:id="@+id/not_started_radio"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/not_started"
+                    style="@style/radio_button"/>
+
+                <com.rey.material.widget.RadioButton
+                    android:id="@+id/progress_radio"
+                    android:text="@string/in_progress"
+                    style="@style/radio_button"
+                    />
+
+                <com.rey.material.widget.RadioButton
+                    android:id="@+id/completed_radio"
+                    android:text="@string/completed"
+                    style="@style/radio_button"/>
             </LinearLayout>
         </ScrollView>
     </RelativeLayout>

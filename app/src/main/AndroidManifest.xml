@@ -28,7 +28,7 @@
 
         <activity
             android:name=".Activities.TaskViewActivity"
-            android:label="@string/create_task"
+            android:label=""
             android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 

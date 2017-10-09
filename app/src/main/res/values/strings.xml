@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Simple Task Manager</string>
     <string name="action_settings">Settings</string>
+    <string name="edit">Edit</string>
 
     <!-- Create new task -->
     <string name="create_task">Create Task</string>
@@ -9,6 +10,12 @@
     <string name="cancel">Cancel</string>
     <string name="due_date">Due Date</string>
     <string name="due_time">Due Time</string>
+
+    <!-- Task DO keywords -->
+    <string name="not_started">Not started</string>
+    <string name="in_progress">In progress</string>
+    <string name="completed">Completed</string>
+
 
     <!-- Misc -->
     <string name="today">Today</string>
@@ -26,5 +33,10 @@
     <string name="frown_icon">{ion-sad-outline}</string>
     <string name="in_progress_icon">{ion-android-time}</string>
     <string name="check_icon">{ion-ios-checkmark-outline}</string>
+
+    <!-- View task -->
+    <string name="view_task">Create Task</string>
+    <string name="due_by">DUE BY</string>
+    <string name="status">STATUS</string>
 
 </resources>

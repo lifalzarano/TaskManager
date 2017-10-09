@@ -52,4 +52,11 @@
         <item name="rd_rippleAnimDuration">250</item>
     </style>
 
+    <style name="radio_button" parent="Material.Drawable.RadioButton">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="rbd_animDuration">150</item>
+    </style>
+
 </resources>

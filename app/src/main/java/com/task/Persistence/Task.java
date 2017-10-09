@@ -7,10 +7,6 @@ import io.realm.RealmObject;
  */
 
 public class Task extends RealmObject {
-    public static int CREATED = 0;
-    public static int IN_PROGRESS = 1;
-    public static int DONE = 2;
-
     private String name;
     private int state;
     private long date;
