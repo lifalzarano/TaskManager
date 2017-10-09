@@ -4,9 +4,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -25,6 +27,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnItemClick;
+import butterknife.OnTextChanged;
 
 import static com.task.Activities.TaskViewActivity.TASK_KEY;
 
@@ -32,6 +35,8 @@ public class MainActivity extends StandardActivity {
     @BindView(R.id.parent) View parent;
     @BindView(R.id.fab) FloatingActionButton fab;
     @BindView(R.id.toolbar) Toolbar toolbar;
+    @BindView(R.id.search_input) EditText searchInput;
+    @BindView(R.id.clear_search_input) View clearSearch;
     @BindView(R.id.empty_state) View emptyState;
     @BindView(R.id.content_view) View contentView;
     @BindView(R.id.num_tasks) TextView numTasks;
@@ -55,6 +60,16 @@ public class MainActivity extends StandardActivity {
         fab.setImageDrawable(new IconDrawable(this, IoniconsIcons.ion_plus)
                 .colorRes(R.color.white)
                 .actionBarSize());
+    }
+
+    @OnTextChanged(value = R.id.search_input, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
+    public void afterTextChanged(Editable input) {
+        clearSearch.setVisibility(input.length() > 0 ? View.VISIBLE : View.GONE);
+    }
+
+    @OnClick(R.id.clear_search_input)
+    public void clearSearch() {
+        searchInput.setText("");
     }
 
     private void refreshPage() {
