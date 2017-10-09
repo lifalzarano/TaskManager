@@ -2,12 +2,11 @@ package com.task.Persistence;
 
 import com.task.Application.MyApplication;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import io.realm.Case;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
-import io.realm.RealmResults;
 
 /**
  * Created by laurenfalzarano on 4/9/17.
@@ -51,14 +50,15 @@ public class DatabaseManager {
         }
     }
 
-    public List<Task> getTasks() {
-        RealmResults<Task> results;
-        List<Task> taskList = new ArrayList<>();
-        results = realm.where(Task.class)
+    public List<Task> getTasks(String query) {
+        return realm.where(Task.class)
+                .contains("name", query, Case.INSENSITIVE)
                 .findAll();
-        for (Task task : results) {
-            taskList.add(task);
-        }
-        return taskList;
+    }
+
+    public int getNumTasks() {
+        return realm.where(Task.class)
+                .findAll()
+                .size();
     }
 }

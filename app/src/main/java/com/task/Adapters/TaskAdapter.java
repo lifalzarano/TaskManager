@@ -25,13 +25,13 @@ public class TaskAdapter extends BaseAdapter {
     private List<Task> tasks;
     private Context context;
 
-    public TaskAdapter(Context context, List<Task> tasks) {
+    public TaskAdapter(Context context) {
         this.context = context;
-        this.tasks = tasks;
+        refreshTasks("");
     }
 
-    public void refreshTasks() {
-        tasks = DatabaseManager.get().getTasks();
+    public void refreshTasks(String query) {
+        tasks = DatabaseManager.get().getTasks(query);
         notifyDataSetChanged();
     }
 
