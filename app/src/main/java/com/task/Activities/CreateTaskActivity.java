@@ -15,8 +15,9 @@ import com.task.Persistence.DatabaseManager;
 import com.task.Persistence.Task;
 import com.task.R;
 import com.task.Utils.FormUtils;
+import com.task.Utils.TimeUtils;
 
-import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -37,6 +38,7 @@ public class CreateTaskActivity extends StandardActivity {
     @BindView(R.id.due_time_input) TextView dueTime;
 
     private Task task;
+    private Calendar calendar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +49,22 @@ public class CreateTaskActivity extends StandardActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        task = new Task();
+        calendar = Calendar.getInstance();
+
+        String taskId = getIntent().getStringExtra(TaskViewActivity.TASK_ID_KEY);
+        if (taskId == null) {
+            task = new Task();
+        } else {
+            task = DatabaseManager.get().getTask(taskId);
+            calendar.setTimeInMillis(task.getTime());
+            fillInForm();
+        }
+    }
+
+    private void fillInForm() {
+        titleInput.setText(task.getName());
+        dueDate.setText(TimeUtils.getDateText(calendar.getTimeInMillis()));
+        dueTime.setText(TimeUtils.getTimeText(calendar.getTimeInMillis()));
     }
 
     @OnTextChanged(value = R.id.title_input, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
@@ -66,8 +83,10 @@ public class CreateTaskActivity extends StandardActivity {
             @Override
             public void onPositiveActionClicked(DialogFragment fragment) {
                 DatePickerDialog dialog = (DatePickerDialog) fragment.getDialog();
-                dueDate.setText(dialog.getFormattedDate(SimpleDateFormat.getDateInstance()));
-                task.setDate(dialog.getDate());
+                calendar.set(Calendar.YEAR, dialog.getYear());
+                calendar.set(Calendar.MONTH, dialog.getMonth());
+                calendar.set(Calendar.DAY_OF_MONTH, dialog.getDay());
+                dueDate.setText(TimeUtils.getDateText(calendar.getTimeInMillis()));
                 super.onPositiveActionClicked(fragment);
             }
         };
@@ -89,8 +108,9 @@ public class CreateTaskActivity extends StandardActivity {
             @Override
             public void onPositiveActionClicked(DialogFragment fragment) {
                 TimePickerDialog dialog = (TimePickerDialog)fragment.getDialog();
-                dueTime.setText(dialog.getFormattedTime(SimpleDateFormat.getTimeInstance()));
-                task.setTime(dialog.getHour());
+                calendar.set(Calendar.HOUR_OF_DAY, dialog.getHour());
+                calendar.set(Calendar.MINUTE, dialog.getMinute());
+                dueTime.setText(TimeUtils.getTimeText(calendar.getTimeInMillis()));
                 super.onPositiveActionClicked(fragment);
             }
         };
@@ -111,6 +131,7 @@ public class CreateTaskActivity extends StandardActivity {
         }
 
         task.setName(title);
+        task.setTime(calendar.getTimeInMillis());
         DatabaseManager.get().saveTask(task);
 
         setResult(RESULT_OK);
