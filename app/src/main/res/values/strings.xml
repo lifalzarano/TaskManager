@@ -5,6 +5,7 @@
 
     <!-- Create new task -->
     <string name="create_task">Create Task</string>
+    <string name="edit_task">Edit Task</string>
     <string name="task_title">Task Title</string>
     <string name="done">Done</string>
     <string name="cancel">Cancel</string>
@@ -16,7 +17,6 @@
     <string name="not_started">Not started</string>
     <string name="in_progress">In progress</string>
     <string name="completed">Completed</string>
-
 
     <!-- Misc -->
     <string name="today">Today</string>
@@ -41,5 +41,6 @@
     <string name="view_task">Create Task</string>
     <string name="due_by">DUE BY</string>
     <string name="status">STATUS</string>
+    <string name="task_updated">Task status updated!</string>
 
 </resources>

@@ -14,9 +14,8 @@ import com.rey.material.widget.RadioButton;
 import com.task.Persistence.DatabaseManager;
 import com.task.Persistence.Task;
 import com.task.R;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import com.task.Utils.FormUtils;
+import com.task.Utils.TimeUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -33,6 +32,7 @@ import static com.task.Utils.FormUtils.IN_PROGRESS;
 public class TaskViewActivity extends StandardActivity {
     public final static String TASK_ID_KEY = "taskId";
 
+    @BindView(R.id.parent) View parent;
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.title) TextView title;
     @BindView(R.id.due_date) TextView dueDate;
@@ -70,11 +70,8 @@ public class TaskViewActivity extends StandardActivity {
         super.onResume();
 
         title.setText(task.getName());
+        dueDate.setText(TimeUtils.getDateAndTime(task));
         clearRadioButtons();
-
-        Date date = new Date(task.getDate());
-        SimpleDateFormat formatter = new SimpleDateFormat("MMM dd yyyy");
-        dueDate.setText(formatter.format(date));
 
         switch (task.getState()) {
             case IN_PROGRESS:
@@ -104,7 +101,7 @@ public class TaskViewActivity extends StandardActivity {
         int id = item.getItemId();
 
         if (id == R.id.edit) {
-            Intent intent = new Intent(this, CreateTaskActivity.class);
+            Intent intent = new Intent(this, TaskFormActivity.class);
             intent.putExtra(TASK_ID_KEY, task.getTaskId());
             startActivityForResult(intent, 1);
         }
@@ -131,5 +128,6 @@ public class TaskViewActivity extends StandardActivity {
         }
 
         DatabaseManager.get().saveTask(task);
+        FormUtils.showBlackSnackbar(parent, R.string.task_updated);
     }
 }

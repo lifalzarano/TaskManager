@@ -103,7 +103,7 @@ public class MainActivity extends StandardActivity {
 
     @OnClick(R.id.fab)
     public void onFabClick() {
-        startActivityForResult(new Intent(this, CreateTaskActivity.class), 1);
+        startActivityForResult(new Intent(this, TaskFormActivity.class), 1);
     }
 
     @OnItemClick(R.id.tasks_list)
