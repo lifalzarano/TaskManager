@@ -40,7 +40,8 @@ public class TaskFormActivity extends StandardActivity {
     @BindView(R.id.save_button) Button saveButton;
 
     private Task task;
-    private Calendar calendar;
+    private Calendar dateCalendar;
+    private Calendar timeCalendar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,8 +52,8 @@ public class TaskFormActivity extends StandardActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(0L);
+        dateCalendar = Calendar.getInstance();
+        timeCalendar = Calendar.getInstance();
 
         String taskId = getIntent().getStringExtra(TaskViewActivity.TASK_ID_KEY);
         if (taskId == null) {
@@ -64,7 +65,8 @@ public class TaskFormActivity extends StandardActivity {
             saveButton.setText(R.string.edit_task);
 
             task = DatabaseManager.get().getTask(taskId);
-            calendar.setTimeInMillis(task.getTime());
+            dateCalendar.setTimeInMillis(task.getDate());
+            timeCalendar.setTimeInMillis(task.getTime());
             fillInForm();
         }
     }
@@ -72,9 +74,11 @@ public class TaskFormActivity extends StandardActivity {
     private void fillInForm() {
         titleInput.setText(task.getName());
         titleInput.setSelection(task.getName().length());
-        if (calendar.getTimeInMillis() > 0L) {
-            dueDate.setText(TimeUtils.getDateText(calendar.getTimeInMillis()));
-            dueTime.setText(TimeUtils.getTimeText(calendar.getTimeInMillis()));
+        if (dateCalendar.getTimeInMillis() > 0L) {
+            dueDate.setText(TimeUtils.getDateText(dateCalendar.getTimeInMillis()));
+        }
+        if (timeCalendar.getTimeInMillis() > 0L) {
+            dueTime.setText(TimeUtils.getTimeText(timeCalendar.getTimeInMillis()));
         }
     }
 
@@ -94,15 +98,10 @@ public class TaskFormActivity extends StandardActivity {
             @Override
             public void onPositiveActionClicked(DialogFragment fragment) {
                 DatePickerDialog dialog = (DatePickerDialog) fragment.getDialog();
-                calendar.set(Calendar.YEAR, dialog.getYear());
-                calendar.set(Calendar.MONTH, dialog.getMonth());
-                calendar.set(Calendar.DAY_OF_MONTH, dialog.getDay());
-                dueDate.setText(TimeUtils.getDateText(calendar.getTimeInMillis()));
-
-                if (dueTime.getText().toString().isEmpty()) {
-                    dueTime.setText(TimeUtils.getTimeText(calendar.getTimeInMillis()));
-                }
-
+                dateCalendar.set(Calendar.YEAR, dialog.getYear());
+                dateCalendar.set(Calendar.MONTH, dialog.getMonth());
+                dateCalendar.set(Calendar.DAY_OF_MONTH, dialog.getDay());
+                dueDate.setText(TimeUtils.getDateText(dateCalendar.getTimeInMillis()));
                 super.onPositiveActionClicked(fragment);
             }
         };
@@ -124,9 +123,13 @@ public class TaskFormActivity extends StandardActivity {
             @Override
             public void onPositiveActionClicked(DialogFragment fragment) {
                 TimePickerDialog dialog = (TimePickerDialog)fragment.getDialog();
-                calendar.set(Calendar.HOUR_OF_DAY, dialog.getHour());
-                calendar.set(Calendar.MINUTE, dialog.getMinute());
-                dueTime.setText(TimeUtils.getTimeText(calendar.getTimeInMillis()));
+
+                // Anchor time calendar to the date the user has currently entered in to get us out of 0 range
+                timeCalendar.setTimeInMillis(dateCalendar.getTimeInMillis());
+
+                timeCalendar.set(Calendar.HOUR_OF_DAY, dialog.getHour());
+                timeCalendar.set(Calendar.MINUTE, dialog.getMinute());
+                dueTime.setText(TimeUtils.getTimeText(timeCalendar.getTimeInMillis()));
                 super.onPositiveActionClicked(fragment);
             }
         };
@@ -148,7 +151,10 @@ public class TaskFormActivity extends StandardActivity {
 
         task.setName(title);
         if (!dueDate.getText().toString().isEmpty()) {
-            task.setTime(calendar.getTimeInMillis());
+            task.setDate(dateCalendar.getTimeInMillis());
+        }
+        if (!dueTime.getText().toString().isEmpty()) {
+            task.setTime(timeCalendar.getTimeInMillis());
         }
         DatabaseManager.get().saveTask(task);
 
