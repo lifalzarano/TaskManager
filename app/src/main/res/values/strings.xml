@@ -35,7 +35,7 @@
     <string name="clear_icon">{ion-ios-close-empty}</string>
     <string name="frown_icon">{ion-sad-outline}</string>
     <string name="in_progress_icon">{ion-android-time}</string>
-    <string name="check_icon">{ion-ios-checkmark-outline}</string>
+    <string name="check_icon">{ion-android-checkmark-circle}</string>
 
     <!-- View task -->
     <string name="view_task">Create Task</string>

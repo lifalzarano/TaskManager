@@ -55,10 +55,6 @@ public class TaskViewActivity extends StandardActivity {
         task = DatabaseManager.get().getTask(taskId);
     }
 
-    public void merp() {
-
-    }
-
     private void clearRadioButtons() {
         notStartedRadio.setCheckedImmediately(false);
         inProgressRadio.setCheckedImmediately(false);
