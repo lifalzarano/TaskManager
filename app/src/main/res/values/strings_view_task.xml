@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="view_task">View Task</string>
+    <string name="due_by">DUE BY</string>
+    <string name="status">STATUS</string>
+    <string name="task_updated">Task status updated!</string>
+
+    <!--Menu Items-->
+    <string name="delete">Delete</string>
+    <string name="delete_task">Delete Task</string>
+</resources>

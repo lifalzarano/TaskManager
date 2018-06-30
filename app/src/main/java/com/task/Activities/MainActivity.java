@@ -31,6 +31,7 @@ public class MainActivity extends StandardActivity {
     @BindView(R.id.parent) View parent;
     @BindView(R.id.fab) FloatingActionButton fab;
     @BindView(R.id.toolbar) Toolbar toolbar;
+    @BindView(R.id.search_bar_container) View searchBarContainer;
     @BindView(R.id.search_input) EditText searchInput;
     @BindView(R.id.clear_search_input) View clearSearch;
     @BindView(R.id.empty_state) View emptyState;
@@ -71,7 +72,7 @@ public class MainActivity extends StandardActivity {
     }
 
     private void refreshPage() {
-        int taskCount = taskAdapter.getCount();
+        int taskCount = DatabaseManager.get().getNumTasks();
 
         if (taskCount == 0) {
             int tasksTrueCount = DatabaseManager.get().getNumTasks();
@@ -80,6 +81,7 @@ public class MainActivity extends StandardActivity {
             if (tasksTrueCount == 0) {
                 noTasksText.setText(R.string.no_tasks);
                 addTasksCta.setVisibility(View.VISIBLE);
+                searchBarContainer.setVisibility(View.GONE);
             }
             // Some tasks in DB; it's just that none match the user's search input
             else {
@@ -92,6 +94,7 @@ public class MainActivity extends StandardActivity {
         } else {
             emptyState.setVisibility(View.GONE);
             taskListView.setVisibility(View.VISIBLE);
+            searchBarContainer.setVisibility(View.VISIBLE);
         }
 
         if (taskCount == 1) {
@@ -122,10 +125,9 @@ public class MainActivity extends StandardActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         menu.findItem(R.id.action_settings).setIcon(
-                new IconDrawable(this, IoniconsIcons.ion_gear_a)
+                new IconDrawable(this, IoniconsIcons.ion_android_settings)
                         .colorRes(R.color.white)
                         .actionBarSize());
         return true;

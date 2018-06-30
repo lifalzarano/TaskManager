@@ -35,6 +35,7 @@ public class TaskViewActivity extends StandardActivity {
     @BindView(R.id.parent) View parent;
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.title) TextView title;
+    @BindView(R.id.due_container) View dueContainer;
     @BindView(R.id.due_date) TextView dueDate;
     @BindView(R.id.not_started_radio) RadioButton notStartedRadio;
     @BindView(R.id.progress_radio) RadioButton inProgressRadio;
@@ -70,6 +71,10 @@ public class TaskViewActivity extends StandardActivity {
         dueDate.setText(TimeUtils.getDateAndTimeText(task));
         clearRadioButtons();
 
+        if (task.getDate() == 0) {
+            dueContainer.setVisibility(View.GONE);
+        }
+
         switch (task.getState()) {
             case IN_PROGRESS:
                 inProgressRadio.setCheckedImmediately(true);
@@ -84,10 +89,15 @@ public class TaskViewActivity extends StandardActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.edit_menu, menu);
+
         menu.findItem(R.id.edit).setIcon(
                 new IconDrawable(this, IoniconsIcons.ion_edit)
+                        .colorRes(R.color.white)
+                        .actionBarSize());
+
+        menu.findItem(R.id.delete).setIcon(
+                new IconDrawable(this, IoniconsIcons.ion_android_delete)
                         .colorRes(R.color.white)
                         .actionBarSize());
         return true;

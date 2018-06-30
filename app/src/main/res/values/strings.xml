@@ -36,11 +36,4 @@
     <string name="frown_icon">{ion-sad-outline}</string>
     <string name="in_progress_icon">{ion-android-time}</string>
     <string name="check_icon">{ion-android-checkmark-circle}</string>
-
-    <!-- View task -->
-    <string name="view_task">Create Task</string>
-    <string name="due_by">DUE BY</string>
-    <string name="status">STATUS</string>
-    <string name="task_updated">Task status updated!</string>
-
 </resources>

@@ -41,60 +41,48 @@
                     android:id="@+id/title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingTop="10dp"
-                    android:textSize="20dp"
-                    android:textColor="@color/gray_900"
+                    android:paddingTop="15dp"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/title_black"
                     android:text="potato"
                     />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginRight="10dp"
-                    android:background="@color/gray_300"/>
+                <View style="@style/view_task_divider"/>
 
-                <TextView
+                <LinearLayout
+                    android:id="@+id/due_container"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/gray_500"
-                    android:textStyle="bold"
-                    android:layout_marginTop="15dp"
-                    android:text="@string/due_by"/>
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:text="@string/due_by"
+                        style="@style/view_task_title"/>
+
+                    <TextView
+                        android:id="@+id/due_date"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/gray_700"
+                        android:text="potato"/>
+
+                    <View style="@style/view_task_divider"/>
+                </LinearLayout>
 
                 <TextView
-                    android:id="@+id/due_date"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/gray_900"
-                    android:layout_marginTop="5dp"
-                    android:text="potato"/>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="15dp"
-                    android:background="@color/gray_300"/>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/gray_500"
-                    android:textStyle="bold"
-                    android:layout_marginTop="15dp"
+                    style="@style/view_task_title"
                     android:text="@string/status"/>
 
                 <com.rey.material.widget.RadioButton
                     android:id="@+id/not_started_radio"
-                    android:layout_marginTop="5dp"
                     android:text="@string/not_started"
                     style="@style/radio_button"/>
 
                 <com.rey.material.widget.RadioButton
                     android:id="@+id/progress_radio"
                     android:text="@string/in_progress"
-                    style="@style/radio_button"
-                    />
+                    style="@style/radio_button"/>
 
                 <com.rey.material.widget.RadioButton
                     android:id="@+id/completed_radio"
