@@ -1,13 +1,10 @@
 package com.task.Persistence;
 
-import com.task.Application.MyApplication;
-
 import java.util.List;
 import java.util.UUID;
 
 import io.realm.Case;
 import io.realm.Realm;
-import io.realm.RealmConfiguration;
 
 /**
  * Created by laurenfalzarano on 4/9/17.
@@ -34,11 +31,7 @@ public class DatabaseManager {
     }
 
     private DatabaseManager() {
-        RealmConfiguration realmConfig = new RealmConfiguration.Builder(MyApplication.getAppContext())
-                .schemaVersion(CURRENT_REALM_VERSION)
-                .build();
-        realm = Realm.getInstance(MyApplication.getAppContext());
-        realmConfig.getSchemaVersion();
+        realm = Realm.getDefaultInstance();
     }
 
     public void saveTask(Task task) {

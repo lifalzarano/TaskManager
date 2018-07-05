@@ -4,6 +4,8 @@
     <string name="due_by">DUE BY</string>
     <string name="status">STATUS</string>
     <string name="task_updated">Task status updated!</string>
+    <string name="delete_dialog_body">Are you sure you want to delete this task? This action cannot be undone.</string>
+    <string name="yes">Yes</string>
 
     <!--Menu Items-->
     <string name="delete">Delete</string>

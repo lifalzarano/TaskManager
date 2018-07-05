@@ -1,17 +1,18 @@
 package com.task.Activities;
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
+import android.text.format.DateFormat;
 import android.view.View;
+import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
-import com.rey.material.app.DatePickerDialog;
-import com.rey.material.app.Dialog;
-import com.rey.material.app.DialogFragment;
-import com.rey.material.app.TimePickerDialog;
-import com.rey.material.widget.Button;
 import com.task.Persistence.DatabaseManager;
 import com.task.Persistence.Task;
 import com.task.R;
@@ -42,6 +43,8 @@ public class TaskFormActivity extends StandardActivity {
     private Task task;
     private Calendar dateCalendar;
     private Calendar timeCalendar;
+    private DatePickerDialog datePickerDialog;
+    private TimePickerDialog timePickerDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +57,8 @@ public class TaskFormActivity extends StandardActivity {
 
         dateCalendar = Calendar.getInstance();
         timeCalendar = Calendar.getInstance();
+
+        initializeDialogs();
 
         String taskId = getIntent().getStringExtra(TaskViewActivity.TASK_ID_KEY);
         if (taskId == null) {
@@ -82,6 +87,41 @@ public class TaskFormActivity extends StandardActivity {
         }
     }
 
+    private void initializeDialogs() {
+        int hourOfDay = timeCalendar.get(Calendar.HOUR_OF_DAY);
+        int minute = timeCalendar.get(Calendar.MINUTE);
+        int modValue = DateFormat.is24HourFormat(this) ? 24 : 12;
+
+        if (minute > 30) {
+            hourOfDay = ++hourOfDay % modValue;
+            minute = 0;
+        } else {
+            minute = 30;
+        }
+
+        timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker timePicker, int hour, int minute) {
+                timeCalendar.set(Calendar.HOUR_OF_DAY, hour);
+                timeCalendar.set(Calendar.MINUTE, minute);
+                dueTime.setText(TimeUtils.getTimeText(timeCalendar.getTimeInMillis()));
+            }
+        }, hourOfDay, minute, DateFormat.is24HourFormat(this));
+
+        int year = dateCalendar.get(Calendar.YEAR);
+        int month = dateCalendar.get(Calendar.MONTH);
+        int dayOfMonth = dateCalendar.get(Calendar.DAY_OF_MONTH);
+        datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth) {
+                dateCalendar.set(Calendar.YEAR, year);
+                dateCalendar.set(Calendar.MONTH, month);
+                dateCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                dueDate.setText(TimeUtils.getDateText(dateCalendar.getTimeInMillis()));
+            }
+        }, year, month, dayOfMonth);
+    }
+
     @OnTextChanged(value = R.id.title_input, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     public void afterTextChanged(Editable input) {
         clearTitle.setVisibility(input.length() > 0 ? View.VISIBLE : View.GONE);
@@ -94,50 +134,12 @@ public class TaskFormActivity extends StandardActivity {
 
     @OnClick({R.id.due_date_title, R.id.due_date_input})
     public void onDate() {
-        Dialog.Builder builder = new DatePickerDialog.Builder(){
-            @Override
-            public void onPositiveActionClicked(DialogFragment fragment) {
-                DatePickerDialog dialog = (DatePickerDialog) fragment.getDialog();
-                dateCalendar.set(Calendar.YEAR, dialog.getYear());
-                dateCalendar.set(Calendar.MONTH, dialog.getMonth());
-                dateCalendar.set(Calendar.DAY_OF_MONTH, dialog.getDay());
-                dueDate.setText(TimeUtils.getDateText(dateCalendar.getTimeInMillis()));
-                super.onPositiveActionClicked(fragment);
-            }
-        };
-        builder.positiveAction(getString(R.string.done));
-        builder.negativeAction(getString(R.string.cancel));
-
-        DialogFragment fragment = DialogFragment.newInstance(builder);
-        fragment.show(getSupportFragmentManager(), null);
+        datePickerDialog.show();
     }
 
     @OnClick({R.id.due_time_title, R.id.due_time_input})
     public void onTime() {
-        if (dueDate.length() == 0) {
-            FormUtils.showBlackSnackbar(parent, R.string.need_date);
-            return;
-        }
-
-        Dialog.Builder builder = new TimePickerDialog.Builder(){
-            @Override
-            public void onPositiveActionClicked(DialogFragment fragment) {
-                TimePickerDialog dialog = (TimePickerDialog)fragment.getDialog();
-
-                // Anchor time calendar to the date the user has currently entered in to get us out of 0 range
-                timeCalendar.setTimeInMillis(dateCalendar.getTimeInMillis());
-
-                timeCalendar.set(Calendar.HOUR_OF_DAY, dialog.getHour());
-                timeCalendar.set(Calendar.MINUTE, dialog.getMinute());
-                dueTime.setText(TimeUtils.getTimeText(timeCalendar.getTimeInMillis()));
-                super.onPositiveActionClicked(fragment);
-            }
-        };
-        builder.positiveAction(getString(R.string.done));
-        builder.negativeAction(getString(R.string.cancel));
-
-        DialogFragment fragment = DialogFragment.newInstance(builder);
-        fragment.show(getSupportFragmentManager(), null);
+        timePickerDialog.show();
     }
 
     @OnClick(R.id.save_button)

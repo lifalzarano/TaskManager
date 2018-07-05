@@ -47,20 +47,16 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
-    <style name="button_ripple">
-        <item name="rd_rippleType">touch</item>
-        <item name="rd_backgroundAnimDuration">0</item>
-        <item name="rd_backgroundColor">@android:color/transparent</item>
-        <item name="rd_maxRippleRadius">match_view</item>
-        <item name="rd_rippleAnimDuration">250</item>
+    <style name="blue_ripple_button">
+        <item name="android:selectableItemBackground">@color/colorAccent</item>
     </style>
 
-    <style name="radio_button" parent="Material.Drawable.RadioButton">
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:gravity">center_vertical</item>
-        <item name="rbd_animDuration">150</item>
-    </style>
+    <!--<style name="radio_button" parent="Material.Drawable.RadioButton">-->
+        <!--<item name="android:layout_height">wrap_content</item>-->
+        <!--<item name="android:layout_width">match_parent</item>-->
+        <!--<item name="android:gravity">center_vertical</item>-->
+        <!--<item name="rbd_animDuration">150</item>-->
+    <!--</style>-->
 
     <style name="clear_icon">
         <item name="android:layout_width">40dp</item>

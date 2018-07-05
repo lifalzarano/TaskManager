@@ -93,17 +93,15 @@
             </LinearLayout>
         </ScrollView>
 
-            <com.rey.material.widget.Button
-                android:id="@+id/save_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:text="@string/create_task"
-                android:textColor="@color/white"
-                android:layout_alignParentBottom="true"
-                android:background="@color/colorAccent"
-                android:textSize="17dp"
-                app:rd_style="@style/button_ripple"/>
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/save_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="@string/create_task"
+            android:textColor="@color/white"
+            android:layout_alignParentBottom="true"
+            android:backgroundTint="@color/colorAccent"
+            android:textSize="17dp"/>
     </RelativeLayout>
-
 </android.support.design.widget.CoordinatorLayout>

@@ -1,22 +1,24 @@
 package com.task.Activities;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.joanzapata.iconify.IconDrawable;
 import com.joanzapata.iconify.fonts.IoniconsIcons;
-import com.rey.material.widget.RadioButton;
 import com.task.Persistence.DatabaseManager;
 import com.task.Persistence.Task;
 import com.task.R;
 import com.task.Utils.FormUtils;
 import com.task.Utils.TimeUtils;
 
+import butterknife.BindDrawable;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -41,6 +43,8 @@ public class TaskViewActivity extends StandardActivity {
     @BindView(R.id.progress_radio) RadioButton inProgressRadio;
     @BindView(R.id.completed_radio) RadioButton completedRadio;
 
+    @BindDrawable(R.drawable.ic_settings_white_24dp) Drawable settingsIcon;
+
     private String taskId;
     private Task task;
 
@@ -57,9 +61,13 @@ public class TaskViewActivity extends StandardActivity {
     }
 
     private void clearRadioButtons() {
-        notStartedRadio.setCheckedImmediately(false);
-        inProgressRadio.setCheckedImmediately(false);
-        completedRadio.setCheckedImmediately(false);
+        notStartedRadio.setChecked(false);
+        inProgressRadio.setChecked(false);
+        completedRadio.setChecked(false);
+    }
+
+    private void deleteTask() {
+
     }
 
     @Override
@@ -77,13 +85,13 @@ public class TaskViewActivity extends StandardActivity {
 
         switch (task.getState()) {
             case IN_PROGRESS:
-                inProgressRadio.setCheckedImmediately(true);
+                inProgressRadio.setChecked(true);
                 break;
             case DONE:
-                completedRadio.setCheckedImmediately(true);
+                completedRadio.setChecked(true);
                 break;
             default:
-                notStartedRadio.setCheckedImmediately(true);
+                notStartedRadio.setChecked(true);
         }
     }
 
@@ -96,24 +104,24 @@ public class TaskViewActivity extends StandardActivity {
                         .colorRes(R.color.white)
                         .actionBarSize());
 
-        menu.findItem(R.id.delete).setIcon(
-                new IconDrawable(this, IoniconsIcons.ion_android_delete)
-                        .colorRes(R.color.white)
-                        .actionBarSize());
+//        menu.findItem(R.id.delete).setIcon(
+//                new IconDrawable(this, IoniconsIcons.ion_android_delete)
+//                        .colorRes(R.color.white)
+//                        .actionBarSize());
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        if (id == R.id.edit) {
-            Intent intent = new Intent(this, TaskFormActivity.class);
-            intent.putExtra(TASK_ID_KEY, task.getTaskId());
-            startActivityForResult(intent, 1);
+        switch (item.getItemId()) {
+            case R.id.edit:
+                Intent intent = new Intent(this, TaskFormActivity.class);
+                intent.putExtra(TASK_ID_KEY, task.getTaskId());
+                startActivityForResult(intent, 1);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-
-        return super.onOptionsItemSelected(item);
     }
 
     @OnClick({R.id.not_started_radio, R.id.progress_radio, R.id.completed_radio})
@@ -122,15 +130,15 @@ public class TaskViewActivity extends StandardActivity {
 
         switch (view.getId()) {
             case R.id.not_started_radio:
-                notStartedRadio.setCheckedImmediately(true);
+                notStartedRadio.setChecked(true);
                 task.setState(CREATED);
                 break;
             case R.id.progress_radio:
-                inProgressRadio.setCheckedImmediately(true);
+                inProgressRadio.setChecked(true);
                 task.setState(IN_PROGRESS);
                 break;
             case R.id.completed_radio:
-                completedRadio.setCheckedImmediately(true);
+                completedRadio.setChecked(true);
                 task.setState(DONE);
         }
 

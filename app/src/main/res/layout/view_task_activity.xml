@@ -74,20 +74,27 @@
                     style="@style/view_task_title"
                     android:text="@string/status"/>
 
-                <com.rey.material.widget.RadioButton
+                <RadioButton
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
                     android:id="@+id/not_started_radio"
                     android:text="@string/not_started"
-                    style="@style/radio_button"/>
+                    android:textColor="@color/gray_700"/>
 
-                <com.rey.material.widget.RadioButton
+                <RadioButton
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
                     android:id="@+id/progress_radio"
                     android:text="@string/in_progress"
-                    style="@style/radio_button"/>
+                    android:textColor="@color/gray_700" />
 
-                <com.rey.material.widget.RadioButton
+                <RadioButton
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
                     android:id="@+id/completed_radio"
+                    android:textColorHighlight="@color/colorPrimary"
                     android:text="@string/completed"
-                    style="@style/radio_button"/>
+                    android:textColor="@color/gray_700" />
             </LinearLayout>
         </ScrollView>
     </RelativeLayout>
