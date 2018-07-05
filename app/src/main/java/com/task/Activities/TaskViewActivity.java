@@ -43,8 +43,6 @@ public class TaskViewActivity extends StandardActivity {
     @BindView(R.id.progress_radio) RadioButton inProgressRadio;
     @BindView(R.id.completed_radio) RadioButton completedRadio;
 
-    @BindDrawable(R.drawable.ic_settings_white_24dp) Drawable settingsIcon;
-
     private String taskId;
     private Task task;
 
